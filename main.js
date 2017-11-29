@@ -26,7 +26,7 @@ function createWindow() {
   win.webContents.executeJavaScript("window.isElectron=true;")
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'dist/index.html'),
+    pathname: path.join(__dirname, 'app/dist/index.html'),
     protocol: 'file',
     slashes: true
   }));
