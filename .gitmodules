@@ -1,3 +1,4 @@
 [submodule "app"]
 	path = app
-	url = git@github.com:SwapyNetwork/swapy-exchange.git
+	url = https://github.com/SwapyNetwork/swapy-exchange.git
+	branch = master
