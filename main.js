@@ -1,8 +1,10 @@
-const { app, BrowserWindow, shell, Menu } = require('electron');
+const { app, BrowserWindow, shell, session } = require('electron');
 const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
 const fs = require('fs');
+
+const extensions = require('./extensions');
 
 if(isDev) {
   require('electron-reload')(path.join(__dirname));
@@ -18,16 +20,15 @@ function createWindow() {
     width: 1200,
     height: 800,
     icon: 'assets/swapy3.png',
-    webPreferences: {
-      nodeIntegration: false
-    }
   });
 
-  win.webContents.executeJavaScript("window.isElectron=true;")
+  extensions.loadMetamask(session, win);
+
+  // win.webContents.executeJavaScript("window.isElectron=true;")
 
   win.loadURL(url.format({
-    pathname: path.join(__dirname, 'app/dist/index.html'),
-    protocol: 'file',
+    pathname: path.join(`brave/${__dirname}`, 'app/dist/index.html'),
+    protocol: 'chrome',
     slashes: true
   }));
 
@@ -35,23 +36,6 @@ function createWindow() {
     // Open the DevTools.
     win.webContents.openDevTools();
   }
-
-  // Create the Application's main menu
-  const template = [{
-    label: "Application",
-    submenu: [
-      { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
-    ]}, {
-    label: "Edit",
-    submenu: [
-      { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
-      { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
-      { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" },
-      { label: "Select All", accelerator: "CmdOrCtrl+A", selector: "selectAll:" }
-    ]}
-  ];
-
-  Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
   win.on('closed', () => {
     win = null;

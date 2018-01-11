@@ -2,24 +2,23 @@
   "name": "swapy-exchange-electron-wrapper",
   "productName": "Swapy Exchange Electron Wrapper",
   "version": "0.0.0",
-  "license": "Copyright",
+  "license": "Apache 2.0",
   "main": "main.js",
   "description": "Electron Wrapper for Swapy Exchange dapp",
   "homepage": "https://swapy.network",
   "scripts": {
-    "start": "electron .",
+    "start": "node setup.js",
     "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.png --asar",
     "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar --icon=./src/assets/img/s-exchange.ico",
     "build.mac": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=darwin --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.icns --asar",
     "deb64": "electron-installer-debian --config debian.json --arch amd64"
   },
-  "private": true,
   "dependencies": {
     "electron-is-dev": "^0.3.0",
-    "npm": "^5.4.2"
+    "eventemitter2": "^5.0.1"
   },
   "devDependencies": {
-    "electron": "^1.7.8",
+    "electron": "git://github.com/brave/electron-prebuilt.git",
     "electron-packager": "^9.1.0",
     "electron-reload": "^1.2.2",
     "electron-windows-installer": "1.7.8",
