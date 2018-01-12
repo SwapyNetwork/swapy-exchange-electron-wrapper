@@ -2,7 +2,7 @@
   "name": "swapy-exchange-electron-wrapper",
   "productName": "Swapy Exchange Electron Wrapper",
   "version": "0.0.0",
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "main": "main.js",
   "description": "Electron Wrapper for Swapy Exchange dapp",
   "homepage": "https://swapy.network",
@@ -11,14 +11,39 @@
     "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.png --asar",
     "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar --icon=./src/assets/img/s-exchange.ico",
     "build.mac": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=darwin --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.icns --asar",
-    "deb64": "electron-installer-debian --config debian.json --arch amd64"
+    "deb64": "electron-installer-debian --config debian.json --arch amd64",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "build": {
+    "appId": "swapy-exchange-alpha",
+    "productName": "Swapy Exchange Alpha",
+    "muonVersion": "4.6.7",
+    "files": [
+      "dist/**/*",
+      "node_modules/**/*",
+      "../node_modules/electron-prebuilt/*"
+    ],
+    "asar": false,
+    "directories": {
+      "buildResources": "",
+      "output": "dist",
+      "app": "app"
+    },
+    "nodeGypRebuild": false,
+    "mac": {
+      "category": "your.app.category.type"
+    }
   },
   "dependencies": {
     "electron-is-dev": "^0.3.0",
+    "electron-prebuilt": "github:brave/electron-prebuilt",
     "eventemitter2": "^5.0.1"
   },
   "devDependencies": {
     "electron": "git://github.com/brave/electron-prebuilt.git",
+    "electron-builder": "^19.52.1",
     "electron-packager": "^9.1.0",
     "electron-reload": "^1.2.2",
     "electron-windows-installer": "1.7.8",

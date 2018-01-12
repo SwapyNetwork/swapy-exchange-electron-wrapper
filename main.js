@@ -1,14 +1,14 @@
 const { app, BrowserWindow, shell, session } = require('electron');
 const path = require('path');
 const url = require('url');
-const isDev = require('electron-is-dev');
+// const isDev = require('electron-is-dev');
 const fs = require('fs');
 
 const extensions = require('./extensions');
 
-if(isDev) {
-  require('electron-reload')(path.join(__dirname));
-}
+// if(isDev) {
+//   require('electron-reload')(path.join(__dirname));
+// }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -27,15 +27,15 @@ function createWindow() {
   // win.webContents.executeJavaScript("window.isElectron=true;")
 
   win.loadURL(url.format({
-    pathname: path.join(`brave/${__dirname}`, 'app/dist/index.html'),
+    pathname: path.join(`brave/${__dirname}`, 'index.html'),
     protocol: 'chrome',
     slashes: true
   }));
 
-  if(isDev) {
+  //if(isDev) {
     // Open the DevTools.
     win.webContents.openDevTools();
-  }
+  //}
 
   win.on('closed', () => {
     win = null;
