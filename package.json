@@ -7,14 +7,17 @@
   "description": "Electron Wrapper for Swapy Exchange dapp",
   "homepage": "https://swapy.network",
   "author": {
-    "name" : "Swapy Network",
-    "email" : "contact@swapy.network"
+    "name": "Swapy Network",
+    "email": "contact@swapy.network"
   },
   "scripts": {
     "start": "node setup.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "copy": "cp extensions app/dist -r && cp extensions.js app/dist && cp main.js app/dist"
+    "copy.electron": "cp extensions app/dist -r && cp extensions.js app/dist && cp main.js app/dist",
+    "download.metamask.dev": "cd extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
+    "download.metamask.prod": "mkdir -p app/dist/extensions && rm -rf app/dist/extensions/* && cd app/dist/extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
+    "build": "npm run download.metamask.prod && npm run copy.electron && yarn dist"
   },
   "build": {
     "appId": "swapy-exchange-alpha",
@@ -33,18 +36,20 @@
       "app": "app"
     },
     "nodeGypRebuild": false,
-
+    "linux": {
+      "target": "deb"
+    },
     "mac": {
       "category": "your.app.category.type"
     }
   },
-  "dependencies": {
-  },
   "devDependencies": {
+    "chrome-ext-downloader": "^1.0.3",
     "electron": "git://github.com/brave/electron-prebuilt.git",
     "electron-builder": "^19.52.1",
     "electron-is-dev": "^0.3.0",
     "electron-prebuilt": "github:brave/electron-prebuilt",
-    "electron-reload": "^1.2.2"
+    "electron-reload": "^1.2.2",
+    "yarn": "^1.3.2"
   }
 }
