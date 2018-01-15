@@ -22,15 +22,15 @@ npm manifest:
     "main": "main.js",
     "description": "Electron Wrapper for Swapy Exchange dapp",
     "homepage": "https://swapy.network",
+    "author": {
+      "name" : "Ícaro Harry",
+      "email" : "icaro@swapy.network",
+    },
     "scripts": {
       "start": "node setup.js",
-      "build.linux": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=linux --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.png --asar",
-      "build.windows": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=win32 --overwrite --out installers/ --ignore=\\src/ --asar --icon=./src/assets/img/s-exchange.ico",
-      "build.mac": "ng build --prod && electron-packager . swapy-exchange-alpha --arch=x64 --platform=darwin --overwrite --out installers/ --ignore=\\src/ --icon=./src/assets/img/s-exchange.icns --asar",
-      "deb64": "electron-installer-debian --config debian.json --arch amd64",
       "pack": "electron-builder --dir",
       "dist": "electron-builder",
-      "postinstall": "electron-builder install-app-deps"
+      "copy": "cp extensions app/dist -r && cp extensions.js app/dist && cp main.js app/dist"
     },
     "build": {
       "appId": "swapy-exchange-alpha",
@@ -38,29 +38,32 @@ npm manifest:
       "muonVersion": "4.6.7",
       "files": [
         "dist/**/*",
-        "node_modules/**/*",
-        "../node_modules/electron-prebuilt/*",
+        "!node_modules"
       ],
-      "asar": false,
+      "asar": true,
+      "asarUnpack": [
+        "dist/extensions/"
+      ],
       "directories": {
-        "buildResources": "",
         "output": "dist",
         "app": "app"
       },
       "nodeGypRebuild": false,
+      "linux": {
+        "target": "deb"
+      },
       "mac": {
         "category": "your.app.category.type"
       }
     },
     "dependencies": {
-      "electron-is-dev": "^0.3.0",
-      "electron-prebuilt": "github:brave/electron-prebuilt",
-      "eventemitter2": "^5.0.1"
+      "electron-is-dev": "^0.3.0"
     },
     "devDependencies": {
       "electron": "git://github.com/brave/electron-prebuilt.git",
       "electron-builder": "^19.52.1",
       "electron-packager": "^9.1.0",
+      "electron-prebuilt": "github:brave/electron-prebuilt",
       "electron-reload": "^1.2.2",
       "electron-windows-installer": "1.7.8",
       "electron-winstaller": "^2.6.3"
@@ -2746,7 +2749,7 @@ Lockfile:
       fd-slicer "~1.0.1"
 
 Trace: 
-  SyntaxError: /home/icaro/workfolder/swapy-exchange-electron-wrapper/package.json: Unexpected token ] in JSON at position 1359
+  SyntaxError: /home/icaro/workfolder/swapy-exchange-electron-wrapper/package.json: Unexpected token } in JSON at position 350
       at JSON.parse (<anonymous>)
       at /usr/share/yarn/lib/cli.js:770:59
       at Generator.next (<anonymous>)
