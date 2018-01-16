@@ -29,11 +29,13 @@ function createWindow() {
   let indexPath;
   isDev ? indexPath = path.join(`brave/${__dirname}`, 'app/dist/index.html') : indexPath = path.join(`brave/${__dirname}`, 'index.html');
 
-  win.loadURL(url.format({
-    pathname: indexPath,
-    protocol: 'chrome',
-    slashes: true
-  }));
+  setTimeout(() => {
+    win.loadURL(url.format({
+      pathname: indexPath,
+      protocol: 'chrome',
+      slashes: true
+    }));
+  }, 200);
 
   if(isDev) {
     win.webContents.openDevTools();

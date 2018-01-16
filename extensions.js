@@ -11,18 +11,22 @@ const getMetamaskPath = (isDev) => {
   return path.resolve(__dirname,`../../app.asar.unpacked/dist/extensions/metamask/`);
 };
 
-const loadMetamask = (session, window, isDev) => {
-  let manifest;
-  let metamaskPopup;
-  let metamaskNotification;
-  let mainWindow = window;
-  const metamaskPath = getMetamaskPath(isDev);
-
+const loadMetamaskFromManifest = (session, metamaskPath) => {
   fs.readFile(`${metamaskPath}/manifest.json`, 'utf8', function (err, data) {
     if (err) throw err;
     manifest = JSON.parse(data);
     session.defaultSession.extensions.load(metamaskPath, manifest, 'component');
   });
+};
+
+const loadMetamask = (session, window, isDev) => {
+  let manifest;
+  let metamaskPopup;
+  let metamaskNotification;
+  let mainWindow = window;
+
+  const metamaskPath = getMetamaskPath(isDev);
+  loadMetamaskFromManifest(session, metamaskPath);
 
   ipcMain.on('open-metamask-popup', (event, arg) => {
     if(metamaskPopup && !metamaskPopup.isDestroyed()) metamaskPopup.close();
@@ -52,6 +56,11 @@ const loadMetamask = (session, window, isDev) => {
 
   ipcMain.on('close-metamask-notification', (event, arg) => {
     metamaskNotification.close();
+  });
+
+  ipcMain.on('reload-metamask', (event, arg) => {
+    loadMetamaskFromManifest(session, metamaskPath);
+    session.defaultSession.extensions.enable(METAMASK_ID)
   });
 };
 
