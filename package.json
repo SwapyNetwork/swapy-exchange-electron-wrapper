@@ -32,15 +32,20 @@
       "dist/extensions/"
     ],
     "directories": {
+      "buildResources": "app/dist/assets/icons",
       "output": "dist",
       "app": "app"
     },
     "nodeGypRebuild": false,
     "linux": {
-      "target": "deb"
+      "target": ["deb", "AppImage"],
+      "icon": "app/dist/assets/icons",
+      "category": "Office"
     },
     "mac": {
-      "category": "your.app.category.type"
+      "category": "public.app-category.finance",
+      "target": "default",
+      "icon": "app/dist/assets/icons/swapy-exchange.ico"
     }
   },
   "devDependencies": {
