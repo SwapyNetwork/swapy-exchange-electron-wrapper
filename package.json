@@ -15,7 +15,7 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
     "copy.electron": "cp extensions app/dist -r && cp extensions.js app/dist && cp main.js app/dist",
-    "download.metamask.dev": "cd extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
+    "download.metamask.dev": "mkdir -p extensions && rm -rf extensions/* && cd extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
     "download.metamask.prod": "mkdir -p app/dist/extensions && rm -rf app/dist/extensions/* && cd app/dist/extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
     "build": "npm run download.metamask.prod && npm run copy.electron && yarn dist"
   },
