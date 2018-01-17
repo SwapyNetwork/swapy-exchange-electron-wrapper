@@ -20,8 +20,8 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 1200,
-    height: 800
+    width: 1920,
+    height: 1080
   });
 
   extensions.loadMetamask(session, win, isDev);
@@ -35,6 +35,7 @@ function createWindow() {
       protocol: 'chrome',
       slashes: true
     }));
+    win.maximize();
   }, 200);
 
   if(isDev) {
