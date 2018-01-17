@@ -14,10 +14,11 @@
     "start": "node setup.js",
     "pack": "electron-builder --dir",
     "dist": "electron-builder",
-    "copy.electron": "cp extensions app/dist -r && cp extensions.js app/dist && cp main.js app/dist",
+    "copy.metamask.prod": "cp -R extensions app/dist && cp extensions.js app/dist && cp main.js app/dist",
     "download.metamask.dev": "mkdir -p extensions && rm -rf extensions/* && cd extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
     "download.metamask.prod": "mkdir -p app/dist/extensions && rm -rf app/dist/extensions/* && cd app/dist/extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
-    "build": "npm run download.metamask.prod && npm run copy.electron && yarn dist"
+    "build": "npm run download.metamask.prod && npm run copy.metamask.prod && yarn dist",
+    "postinstall": "npm i --save-dev brave/electron-prebuilt"
   },
   "build": {
     "appId": "swapy-exchange-alpha",
@@ -38,19 +39,25 @@
     },
     "nodeGypRebuild": false,
     "linux": {
-      "target": ["deb", "AppImage"],
+      "target": [
+        "deb",
+        "AppImage"
+      ],
       "icon": "app/dist/assets/icons",
       "category": "Office"
     },
     "mac": {
       "category": "public.app-category.finance",
       "target": "default",
+      "icon": "app/dist/assets/icons/swapy-exchange"
+    },
+    "win": {
+      "target": "nsis",
       "icon": "app/dist/assets/icons/swapy-exchange.ico"
     }
   },
   "devDependencies": {
     "chrome-ext-downloader": "^1.0.3",
-    "electron": "git://github.com/brave/electron-prebuilt.git",
     "electron-builder": "^19.52.1",
     "electron-is-dev": "^0.3.0",
     "electron-prebuilt": "github:brave/electron-prebuilt",

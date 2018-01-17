@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, session } = require('electron');
+const { app, BrowserWindow, shell, session, Menu, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
 const fs = require('fs');
@@ -35,12 +35,26 @@ function createWindow() {
       protocol: 'chrome',
       slashes: true
     }));
+    var template = [{
+      label: "Edit",
+        submenu: [
+          { label: "Cut", accelerator: "CmdOrCtrl+X", selector: "cut:" },
+          { label: "Copy", accelerator: "CmdOrCtrl+C", selector: "copy:" },
+          { label: "Paste", accelerator: "CmdOrCtrl+V", selector: "paste:" }
+      ]}
+    ];
+
+    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
     win.maximize();
   }, 200);
 
   if(isDev) {
     win.webContents.openDevTools();
   }
+
+  ipcMain.on('open-link', (evt, link) => {
+    shell.openExternal(link);
+  });
 
   win.on('closed', () => {
     win = null;
