@@ -18,7 +18,6 @@ const loadMetamaskFromManifest = (session, metamaskPath) => {
     manifest = JSON.parse(data);
     manifest.content_scripts[0].matches = ['chrome://brave/**/*'];
     manifest.key = METAMASK_KEY;
-    console.log(manifest)
     session.defaultSession.extensions.load(metamaskPath, manifest, 'component');
   });
 };
