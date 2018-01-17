@@ -18,6 +18,7 @@
     "download.metamask.dev": "mkdir -p extensions && rm -rf extensions/* && cd extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
     "download.metamask.prod": "mkdir -p app/dist/extensions && rm -rf app/dist/extensions/* && cd app/dist/extensions && ced nkbihfbeogaeaoehlefnkodbefgpgknn && mv nkbihfbeogaeaoehlefnkodbefgpgknn metamask",
     "build": "npm run download.metamask.prod && npm run copy.metamask.prod && yarn dist",
+    "build.win": "npm run download.metamask.prod && npm run copy.metamask.prod && yarn dist -w",
     "postinstall": "npm i --save-dev brave/electron-prebuilt"
   },
   "build": {
