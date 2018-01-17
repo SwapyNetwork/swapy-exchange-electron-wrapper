@@ -58,7 +58,7 @@ const loadMetamask = (session, window, isDev) => {
   });
 
   ipcMain.on('close-metamask-notification', (event, arg) => {
-    metamaskNotification.close();
+    if(metamaskPopup && !metamaskPopup.isDestroyed()) metamaskPopup.close();
   });
 
   ipcMain.on('reload-metamask', (event, arg) => {
